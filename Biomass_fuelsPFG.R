@@ -310,7 +310,7 @@ calcFuelTypes <- function(sim) {
   ## how: have Biomass_core export the map/stats plot windows
   ## to sim, so they can be used here.
   if (P(sim)$.plotMaps) {
-  browser()
+    browser()
   }
 
   return(invisible(sim))
