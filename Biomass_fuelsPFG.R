@@ -45,13 +45,13 @@ defineModule(sim, list(
     expectsInput(objectName = "FirePFGs", objectClass = "data.table",
                  desc = paste("Table of fire-related plant functional groups, with species and age composition",
                               "per group."),
-                 source = NA),
+                 source = "https://drive.google.com/file/d/1xsNfPLy91D3VxMASAH4_-PUWs3HQWqBx/view?usp=sharing"),
     expectsInput(objectName = "FirePFGs2Fuels", objectClass = "data.table",
                  desc = paste("Table of correspondence between fire plant functional groups and FBP fuel types",
                               "(using fuel types from CF Fire Behaviour Prediction System (2nd Ed.)).",
                               "The table includes (minimum) thresholds of abundance that each group must have in",
                               "order to apply a particular fuel type to a stand."),
-                 source = NA),
+                 source = "https://drive.google.com/file/d/1nkKTsxPIpIvjwLsiMu6NrWv52c498UKx/view?usp=sharing"),
     expectsInput(objectName = "nonForestFuelsTable", objectClass = "data.table",
                  desc = paste("Table of correspondence between non-forested land-cover classes and fire fuels.",
                               "Fuel types come from CF Fire Behaviour Prediction System (2nd Ed.). Default values",
@@ -339,6 +339,7 @@ calcFuelTypes <- function(sim) {
   ## FIRE PFGS AND FUEL TYPES ----------------------
   if (!suppliedElsewhere("FirePFGs", sim)) {
     sim$FirePFGs <- prepInputs(targetFile = "FirePFGs.csv",
+                               url = extractURL("FirePFGs"),
                                destinationPath = dPath,
                                fun = "data.table::fread",
                                header = TRUE)
@@ -352,6 +353,7 @@ calcFuelTypes <- function(sim) {
 
   if (!suppliedElsewhere("FirePFGs2Fuels", sim)) {
     sim$FirePFGs2Fuels <- prepInputs(targetFile = "FirePFGs2Fuels.csv",
+                                     url = extractURL("FirePFGs2Fuels"),
                                      destinationPath = dPath,
                                      fun = "data.table::fread",
                                      header = TRUE)
