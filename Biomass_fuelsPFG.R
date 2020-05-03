@@ -467,7 +467,7 @@ calcFuelTypes <- function(sim) {
                              maskWithRTM = TRUE,
                              method = "ngb",
                              datatype = "INT2U",
-                             filename2 = FALSE, overwrite = TRUE,
+                             filename2 = NULL, overwrite = TRUE,
                              userTags = c("prepInputsrstLCCRTM", cacheTags), # use at least 1 unique userTag
                              omitArgs = c("destinationPath", "targetFile", "userTags"))
     } else {
