@@ -11,14 +11,13 @@ defineModule(sim, list(
               person("Steven", "Cumming", email = "stevec@sbf.ulaval.ca", role = c("ctb"))),
   childModules = character(0),
   version = list(Biomass_fuelsPFG = numeric_version("0.0.1"),
-                 LandR = "0.0.3.9000", SpaDES.core = "0.2.7"),
   spatialExtent = raster::extent(rep(NA_real_, 4)),
   timeframe = as.POSIXlt(c(NA, NA)),
   timeunit = "year",
   citation = list("citation.bib"),
   documentation = list("README.txt", "Biomass_fuelsPFG.Rmd"),
   reqdPkgs = list("data.table", "dplyr", "sn", "RColorBrewer",
-                  "PredictiveEcology/LandR@development",
+                  "PredictiveEcology/LandR@development (>=0.0.11.9008)",
                   "PredictiveEcology/SpaDES.core@development",
                   "PredictiveEcology/SpaDES.tools@development",
                   "PredictiveEcology/reproducible@development"),
@@ -195,10 +194,10 @@ calcFuelTypes <- function(sim) {
 
   cols <- c("speciesCode", "B", "pixelGroup")
   mixedPixelGroup <- sim$cohortData[, ..cols][mixedPixelGroup, on = .(pixelGroup)]
-  mixedPixelGroup[, Type := equivalentName(speciesCode, sim$sppEquiv, "Type")]
+  mixedPixelGroup[, Broadleaf := equivalentName(speciesCode, sim$sppEquiv, "Broadleaf")]
 
   mixedPixelGroup[, sumB := sum(B), by = pixelGroup]
-  mixedPixelGroup[Type == "Conifer", coniferDom := sum(B)/sumB, by = pixelGroup]
+  mixedPixelGroup[Broadleaf == FALSE, coniferDom := sum(B)/sumB, by = pixelGroup]
 
   ## remove unnecessary columns and NAs that came from deciduous stands
   mixedPixelGroup <- unique(mixedPixelGroup[, .(pixelGroup, FT, coniferDom)])
