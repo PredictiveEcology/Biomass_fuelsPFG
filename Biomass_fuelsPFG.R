@@ -89,6 +89,7 @@ doEvent.Biomass_fuelsPFG = function(sim, eventTime, eventType) {
     init = {
       # do stuff for this event
       sim <- fuelsInit(sim)
+      sim <- calcFuelTypes(sim)
 
       sim <- scheduleEvent(sim, P(sim)$fireInitialTime,
                            "Biomass_fuelsPFG", "doFuelTypes", eventPriority = 1)
@@ -111,13 +112,22 @@ doEvent.Biomass_fuelsPFG = function(sim, eventTime, eventType) {
 ### initialization
 fuelsInit <- function(sim) {
   ## checks
-  if (start(sim) == P(sim)$fireInitialTime)
-    warning(red("start(sim) and P(sim)$fireInitialTime are the same.\nThis may create bad scheduling with init events"))
+  ## checks
+  if (!is.na(P(sim)$fireInitialTime)) {
+    if (start(sim) == P(sim)$fireInitialTime) {
+      warning(red("start(sim) and P(sim)$fireInitialTime are the same.\nThis may create bad scheduling with init events"))
+    }
+  }
 
   return(invisible(sim))
 }
 
 calcFuelTypes <- function(sim) {
+  ## CHECKS --------------------------------------------------
+  if (is.null(sim$cohortData)) {
+    stop("'sim$cohortData' needs to be supplied.")
+  }
+
   ## PIXEL FUEL TYPES TABLE ------------------------
   ## create pixelGroupFuelTypes table from cohorData
   pixelGroupFuelTypes <- sim$cohortData[, .(speciesCode, pixelGroup, ecoregionGroup, age, B)]
