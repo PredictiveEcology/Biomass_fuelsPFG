@@ -490,7 +490,5 @@ calcFuelTypes <- function(sim) {
     }
   }
 
-  }
-
   return(invisible(sim))
 }
