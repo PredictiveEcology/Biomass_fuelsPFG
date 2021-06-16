@@ -37,7 +37,7 @@ defineModule(sim, list(
     defineParameter(".useCache", "logical", "init", NA, NA,
                     desc = "use caching for the spinup simulation?")
   ),
-  inputObjects = bind_rows(
+  inputObjects = bindrows(
     expectsInput(objectName = "cohortData", objectClass = "data.table",
                  desc = "age cohort-biomass table hooked to pixel group map by pixelGroupIndex at succession time step",
                  sourceURL = NA),
@@ -74,7 +74,7 @@ defineModule(sim, list(
                  desc = "table of species equivalencies. See LandR::sppEquivalencies_CA.",
                  sourceURL = NA)
   ),
-  outputObjects = bind_rows(
+  outputObjects = bindrows(
     createsOutput(objectName = "fuelTypesMaps", objectClass = "list",
                   desc = "List of RasterLayers of fuel types and coniferDominance per pixel."),
     createsOutput(objectName = "pixelNonForestFuels", objectClass = "data.table",
