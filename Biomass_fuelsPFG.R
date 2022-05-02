@@ -342,7 +342,8 @@ calcFuelTypes <- function(sim) {
   paramCheckOtherMods(sim, "sppEquivCol", ifSetButDifferent = "error")
 
   sppOuts <- sppHarmonize(sim$sppEquiv, sim$sppNameVector, P(sim)$sppEquivCol,
-                          sim$sppColorVect)
+                          sim$sppColorVect, studyArea = sim$studyArea)
+
   ## the following may, or may not change inputs
   sim$sppEquiv <- sppOuts$sppEquiv
   P(sim)$sppEquivCol <- sppOuts$sppEquivCol
