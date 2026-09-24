@@ -479,7 +479,7 @@ calcFuelTypes <- function(sim) {
         overwrite = TRUE,
         userTags = c("rstLCCRTM", currentModule(sim), P(sim)$.studyAreaName))
 
-      if (!compareRaster(sim$rstLCCRTM, sim$rasterToMatchLarge)) {
+      if (!compareRaster(sim$rstLCCRTM, sim$rasterToMatch)) {
         sim$rstLCCRTM <- projectRaster(sim$rstLCCRTM, to = sim$rasterToMatch)
       }
     } else {
