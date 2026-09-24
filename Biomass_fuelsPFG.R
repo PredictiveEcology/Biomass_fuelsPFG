@@ -10,7 +10,7 @@ defineModule(sim, list(
               person(c("Eliot", "J", "B"), "McIntire", email = "eliot.mcintire@canada.ca", role = c("ctb")),
               person("Steven", "Cumming", email = "stevec@sbf.ulaval.ca", role = c("ctb"))),
   childModules = character(0),
-  version = list(Biomass_fuelsPFG = numeric_version("0.0.1")),
+  version = list(Biomass_fuelsPFG = numeric_version("0.0.1.9000")),
   spatialExtent = raster::extent(rep(NA_real_, 4)),
   timeframe = as.POSIXlt(c(NA, NA)),
   timeunit = "year",
@@ -34,6 +34,8 @@ defineModule(sim, list(
                     desc = "Controls whether maps should be plotted or not"),
     defineParameter("sppEquivCol", "character", "Boreal", NA, NA,
                     "The column in sim$specieEquivalency data.table to use as a naming convention"),
+    defineParameter(".studyAreaName", "character", NA, NA, NA,
+                    "Human-readable name for the study area used. If `NA`, a hash of `studyArea` will be used."),
     defineParameter(".useCache", "logical", "init", NA, NA,
                     desc = "use caching for the spinup simulation?")
   ),
@@ -70,6 +72,10 @@ defineModule(sim, list(
                               "    neighbour class, based on P(sim)$LCCClassesToReplaceNN.\n",
                               "The default layer used, if not supplied, is Canada national land classification in 2005"),
                  sourceURL = "https://drive.google.com/file/d/1g9jr0VrQxqxGjZ4ckF6ZkSMP-zuYzHQC/view?usp=sharing"),
+    expectsInput("studyArea", "SpatialPolygonsDataFrame",
+                 desc = paste("Polygon of the study area. Required to make `rstLCCRTM` when it is not supplied;",
+                              "its hash is the default `.studyAreaName`."),
+                 sourceURL = NA),
     expectsInput(objectName = "sppEquiv", objectClass = "data.table",
                  desc = "table of species equivalencies. See LandR::sppEquivalencies_CA.",
                  sourceURL = NA)
@@ -396,6 +402,12 @@ calcFuelTypes <- function(sim) {
       stop("Please provide a 'studyArea' polygon")
       # message("'studyArea' was not provided by user. Using a polygon (6250000 m^2) in southwestern Alberta, Canada")
       # sim$studyArea <- randomStudyArea(seed = 1234, size = (250^2)*100)  # Jan 2021 we agreed to force user to provide a SA/SAL
+    }
+
+    if (is.na(P(sim)$.studyAreaName)) {
+      params(sim)[[currentModule(sim)]][[".studyAreaName"]] <- reproducible::studyAreaName(sim$studyArea)
+      message("The .studyAreaName is not supplied; derived name from sim$studyArea: ",
+              params(sim)[[currentModule(sim)]][[".studyAreaName"]])
     }
 
     ## Raster(s) to match ------------------------------------------------
