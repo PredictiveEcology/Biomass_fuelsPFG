@@ -2,7 +2,9 @@
 title: "Biomass_fuelsPFG"
 author: ""
 date: "18 March 2020"
-output: pdf_document
+output:
+  html_document:
+    keep_md: yes
 ---
 
 # Overview
@@ -20,7 +22,7 @@ For help writing in R Markdown, see http://rmarkdown.rstudio.com/.
 
 # Usage
 
-```{r module_usage}
+```{r module_usage, eval = FALSE}
 library(SpaDES.core)
 
 setPaths(modulePath = file.path("E:/GitHub/LandscapesInMotion/R/SpaDES/m"))
