@@ -52,7 +52,7 @@ mySimOut <- spades(mySim)
 Provide a summary of user-visible parameters.
 
 ```{r moduleParams}
-df_params <- moduleParams("Biomass_fuelsPFG", "..")
+df_params <- SpaDES.core::moduleParams("Biomass_fuelsPFG", "..")
 knitr::kable(df_params)
 ```
 
@@ -76,7 +76,7 @@ How to obtain input data, and a description of the data required by the module.
 If `sourceURL` is specified, `downloadData("Biomass_fuelsPFG", "path/to/modules/dir")` may be sufficient.
 
 ```{r moduleInputs}
-df_inputs <- moduleInputs("Biomass_fuelsPFG", "..")
+df_inputs <- SpaDES.core::moduleInputs("Biomass_fuelsPFG", "..")
 knitr::kable(df_inputs)
 ```
 
@@ -85,7 +85,7 @@ knitr::kable(df_inputs)
 Description of the module outputs.
 
 ```{r moduleOutputs}
-df_outputs <- moduleOutputs("Biomass_fuelsPFG", "..")
+df_outputs <- SpaDES.core::moduleOutputs("Biomass_fuelsPFG", "..")
 knitr::kable(df_outputs)
 ```
 
