@@ -1,94 +1,127 @@
 ---
-title: "Biomass_fuelsPFG"
-author: ""
-date: "18 March 2020"
+title: "Biomass_fuelsPFG Manual"
+subtitle: "v.`r SpaDES.core::moduleMetadata(module = 'Biomass_fuelsPFG', path = '..')$version`"
+date: "Last updated: `r Sys.Date()`"
 output:
-  html_document:
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    theme: sandstone
+    number_sections: false
+    df_print: paged
     keep_md: yes
+editor_options:
+  chunk_output_type: console
+bibliography: citations/references_Biomass_fuelsPFG.bib
+link-citations: true
+always_allow_html: true
 ---
 
-# Overview
+# Biomass_fuelsPFG Module
 
-Provide an overview of what the module does / how to use the module.
+<!-- the following are text references used in captions for LaTeX compatibility -->
+(ref:Biomass-fuelsPFG) *Biomass_fuelsPFG*
+
+```{r setup-Biomass-fuelsPFG, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, results = "hold") ## change to eval = TRUE if all chunks are to be evaluated
+
+dir.create("figures", showWarnings = FALSE)
+```
+
+[![made-with-Markdown](https://img.shields.io/badge/Made%20with-Markdown-1f425f.png)](https://commonmark.org)
+
+<!-- if knitting to pdf remember to add the pandoc_args: ["--extract-media", "."] option to yml in order to get the badge images -->
+
+#### Authors:
+
+`r paste(as.character(SpaDES.core::moduleMetadata(module = "Biomass_fuelsPFG", path = '..')$authors), sep = ', ')`
+<!-- ideally separate authors with new lines, '\n' not working -->
+
+## Module Overview
+
+### Module summary
+
+Provide a brief summary of what the module does / how to use the module.
 
 Module documentation should be written so that others can use your module.
 This is a template for module documentation, and should be changed to reflect your module.
 
-## R Markdown
+### Module inputs and parameters
 
-R Markdown syntax allows R code, outputs, and figures to be rendered in the documentation.
+Describe input data required by the module and how to obtain it (e.g., directly from online sources or supplied by other modules)
+If `sourceURL` is specified, `downloadData("Biomass_fuelsPFG", "..")` may be sufficient.
 
-For help writing in R Markdown, see http://rmarkdown.rstudio.com/.
+Table \@ref(tab:moduleInputs-Biomass-fuelsPFG) shows the full list of module inputs.
 
-# Usage
-
-```{r module_usage, eval = FALSE}
-library(SpaDES.core)
-
-setPaths(modulePath = file.path("E:/GitHub/LandscapesInMotion/R/SpaDES/m"))
-getPaths() # shows where the 4 relevant paths are
-
-times <- list(start = 0, end = 10)
-
-parameters <- list(
-  #.progress = list(type = "text", interval = 1), # for a progress bar
-  ## If there are further modules, each can have its own set of parameters:
-  #module1 = list(param1 = value1, param2 = value2),
-  #module2 = list(param1 = value1, param2 = value2)
-)
-modules <- list("Biomass_fuelsPFG")
-objects <- list()
-inputs <- list()
-outputs <- list()
-
-mySim <- simInit(times = times, params = parameters, modules = modules,
-                 objects = objects)
-
-mySimOut <- spades(mySim)
+```{r moduleInputs-Biomass-fuelsPFG, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+df_inputs <- SpaDES.core::moduleInputs("Biomass_fuelsPFG", "..")
+knitr::kable(df_inputs,
+             caption = "List of (ref:Biomass-fuelsPFG) input objects and their description.") |>
+  kableExtra::kable_styling(latex_options = "scale_down", full_width = TRUE)
 ```
 
-# Parameters
+Summary of user-visible parameters (Table \@ref(tab:moduleParams-Biomass-fuelsPFG))
 
-Provide a summary of user-visible parameters.
 
-```{r moduleParams}
+```{r moduleParams-Biomass-fuelsPFG, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
 df_params <- SpaDES.core::moduleParams("Biomass_fuelsPFG", "..")
-knitr::kable(df_params)
+knitr::kable(df_params, caption = "List of (ref:Biomass-fuelsPFG) parameters and their description.") |>
+  kableExtra::kable_styling(latex_options = "scale_down", full_width = TRUE)
 ```
 
-# Events
+Table \@ref(tab:moduleReqdPkgs-Biomass-fuelsPFG) lists the R packages this module
+requires. These are installed and loaded automatically by `simInit()`.
+
+```{r moduleReqdPkgs-Biomass-fuelsPFG, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
+df_pkgs <- SpaDES.core::moduleReqdPkgs("Biomass_fuelsPFG", "..")
+knitr::kable(df_pkgs, caption = "List of (ref:Biomass-fuelsPFG) required packages.") |>
+  kableExtra::kable_styling(latex_options = "scale_down", full_width = TRUE)
+```
+
+### Events
 
 Describe what happens for each event type.
 
-## Plotting
+```{r eventFlow-Biomass-fuelsPFG, echo = FALSE, eval = TRUE, cache = FALSE, out.width = "100%", fig.pos = "H", fig.cap = "(ref:Biomass-fuelsPFG) events, as read from the module code with its default parameters."}
+ef <- tryCatch(SpaDES.core::moduleEventFlow("Biomass_fuelsPFG", path = ".."), error = function(e) e)
+SpaDES.core::includeModuleEventFlow(ef, "figures/Biomass_fuelsPFG_eventFlow.png")
+```
+
+```{r eventObjects-Biomass-fuelsPFG, echo = FALSE, eval = TRUE, cache = FALSE}
+SpaDES.core::kableModuleObjects(ef, caption = "Where each object of (ref:Biomass-fuelsPFG) is written and read, in run order.",
+                                lead = "Table \\@ref(tab:eventObjects-Biomass-fuelsPFG) lists, for each object, the code that writes it and the code that only reads it.")
+```
+
+```{r eventFigures-Biomass-fuelsPFG, echo = FALSE, eval = TRUE, cache = FALSE, results = "asis"}
+SpaDES.core::moduleEventFigures(ef, figDir = "figures", level = 4)
+```
+
+### Plotting
 
 Write what is plotted.
 
-## Saving
+### Saving
 
 Write what is saved.
 
-# Data dependencies
+### Module outputs
 
-## Input data
+Description of the module outputs (Table \@ref(tab:moduleOutputs-Biomass-fuelsPFG)).
 
-How to obtain input data, and a description of the data required by the module.
-If `sourceURL` is specified, `downloadData("Biomass_fuelsPFG", "path/to/modules/dir")` may be sufficient.
-
-```{r moduleInputs}
-df_inputs <- SpaDES.core::moduleInputs("Biomass_fuelsPFG", "..")
-knitr::kable(df_inputs)
-```
-
-## Output data
-
-Description of the module outputs.
-
-```{r moduleOutputs}
+```{r moduleOutputs-Biomass-fuelsPFG, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE}
 df_outputs <- SpaDES.core::moduleOutputs("Biomass_fuelsPFG", "..")
-knitr::kable(df_outputs)
+knitr::kable(df_outputs, caption = "List of (ref:Biomass-fuelsPFG) outputs and their description.") |>
+  kableExtra::kable_styling(latex_options = "scale_down", full_width = TRUE)
 ```
 
-# Links to other modules
+### Links to other modules
 
-Describe any anticipated linkages to other modules.
+Describe any anticipated linkages to other modules, such as modules that supply input data or do post-hoc analysis.
+
+### Getting help
+
+-   provide a way for people to obtain help (e.g., module repository issues page)
+
+## References
+
+<!-- autogenerated from bibligraphy -->

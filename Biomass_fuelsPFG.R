@@ -15,7 +15,7 @@ defineModule(sim, list(
   timeframe = as.POSIXlt(c(NA, NA)),
   timeunit = "year",
   citation = list("citation.bib"),
-  documentation = list("README.txt", "Biomass_fuelsPFG.Rmd"),
+  documentation = list("README.md", "Biomass_fuelsPFG.Rmd"),
   reqdPkgs = list("data.table", "dplyr", "sn", "RColorBrewer",
                   "PredictiveEcology/LandR@development (>= 1.0.7.9015)",
                   "PredictiveEcology/SpaDES.core@development",
